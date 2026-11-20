@@ -8,7 +8,11 @@ let wordPairs = [];
 let isGermanVisible = false;
 let practiceCard;
 let nextPracticeButton;
+let knownCardButton;
+let knownCardCountText;
 let practiceCardIndex = 0;
+let knownCardCount = 0;
+let isCurrentCardMarkedKnown = false;
 
 // Loads saved word pairs from localStorage when the page starts.
 function loadWordPairs() {
@@ -64,6 +68,10 @@ function showWordPairs() {
 // Removes the selected word pair and shows the updated list.
 function deleteWordPair(index) {
     wordPairs.splice(index, 1);
+    if (index === practiceCardIndex) {
+        isCurrentCardMarkedKnown = false;
+    }
+
     if (index < practiceCardIndex) {
         practiceCardIndex--;
     } else if (practiceCardIndex >= wordPairs.length) {
@@ -82,6 +90,8 @@ function createPracticeMode() {
     const practiceHeading = document.createElement("h2");
     practiceCard = document.createElement("button");
     nextPracticeButton = document.createElement("button");
+    knownCardButton = document.createElement("button");
+    knownCardCountText = document.createElement("p");
 
     practiceHeading.textContent = "Üben";
     practiceCard.type = "button";
@@ -91,10 +101,16 @@ function createPracticeMode() {
     nextPracticeButton.style.backgroundColor = "#444";
     nextPracticeButton.style.color = "#fff";
     nextPracticeButton.addEventListener("click", showNextPracticeCard);
+    knownCardButton.type = "button";
+    knownCardButton.textContent = "i knew it! yaaaay!";
+    knownCardButton.addEventListener("click", markCurrentCardKnown);
     practiceSection.appendChild(practiceHeading);
     practiceSection.appendChild(practiceCard);
     practiceSection.appendChild(nextPracticeButton);
+    practiceSection.appendChild(knownCardButton);
+    practiceSection.appendChild(knownCardCountText);
     mainContent.appendChild(practiceSection);
+    updateKnownCardCount();
 }
 
 // Shows the English word, or the German word after the card is clicked.
@@ -103,11 +119,13 @@ function showPracticeCard() {
         practiceCard.textContent = "Noch keine Wortpaare zum Üben.";
         practiceCard.disabled = true;
         nextPracticeButton.disabled = true;
+        knownCardButton.disabled = true;
         return;
     }
 
     practiceCard.disabled = false;
     nextPracticeButton.disabled = wordPairs.length < 2;
+    knownCardButton.disabled = isCurrentCardMarkedKnown;
     practiceCard.textContent = isGermanVisible
         ? wordPairs[practiceCardIndex].german
         : wordPairs[practiceCardIndex].english;
@@ -126,6 +144,7 @@ function showNextPracticeCard() {
 
     practiceCardIndex = nextIndex;
     isGermanVisible = false;
+    isCurrentCardMarkedKnown = false;
     showPracticeCard();
 }
 
@@ -133,6 +152,24 @@ function showNextPracticeCard() {
 function togglePracticeAnswer() {
     isGermanVisible = !isGermanVisible;
     showPracticeCard();
+}
+
+// Counts the current card as known once during this display.
+function markCurrentCardKnown() {
+    if (isCurrentCardMarkedKnown || wordPairs.length === 0) {
+        return;
+    }
+
+    isCurrentCardMarkedKnown = true;
+    knownCardCount++;
+    updateKnownCardCount();
+    showPracticeCard();
+}
+
+// Displays how many cards were marked known during this session.
+function updateKnownCardCount() {
+    knownCardCountText.textContent =
+        "Cards marked 'I knew it': " + knownCardCount + " this session";
 }
 
 // Prevents empty submissions and clears the form after a valid submission.
