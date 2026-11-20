@@ -20,3 +20,11 @@ button {
     margin-top: 5px;
     cursor: pointer;
 }
+
+#word-list {
+    padding-left: 20px;
+}
+
+#word-list li {
+    margin-bottom: 8px;
+}
