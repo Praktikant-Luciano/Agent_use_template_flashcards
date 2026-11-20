@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pain Diary</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <p class="eyebrow">Patient record</p>
+      <h1>Pain diary</h1>
+      <p class="intro">Record a pain assessment and any measure taken.</p>
+    </header>
+
+    <section class="assessment-card" aria-labelledby="assessment-title">
+      <h2 id="assessment-title">New assessment</h2>
+      <form id="assessment-form">
+        <div class="field-grid">
+          <div class="field">
+            <label for="assessment-date">Date</label>
+            <input id="assessment-date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="assessment-time">Time</label>
+            <input id="assessment-time" name="time" type="time" required>
+          </div>
+          <div class="field field-wide">
+            <label for="person-name">Name</label>
+            <input id="person-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field field-wide">
+            <label for="nrs-value">Pain level (NRS 0–10)</label>
+            <select id="nrs-value" name="nrs" required>
+              <option value="" selected disabled>Select a pain level</option>
+              <option value="0">0 — No pain</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10 — Worst pain</option>
+            </select>
+            <small>0 means no pain; 10 means the worst pain.</small>
+          </div>
+          <div class="field field-wide" id="measure-field" hidden>
+            <label for="measure-taken">Measure taken</label>
+            <textarea id="measure-taken" name="measure" rows="3"></textarea>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
