@@ -2,8 +2,11 @@ const wordForm = document.getElementById("word-form");
 const englishInput = document.getElementById("english-word");
 const germanInput = document.getElementById("german-word");
 const wordList = document.getElementById("word-list");
+const mainContent = document.querySelector("main");
 const storageKey = "wordPairs";
 let wordPairs = [];
+let isGermanVisible = false;
+let practiceCard;
 
 // Loads saved word pairs from localStorage when the page starts.
 function loadWordPairs() {
@@ -61,6 +64,42 @@ function deleteWordPair(index) {
     wordPairs.splice(index, 1);
     saveWordPairs();
     showWordPairs();
+    isGermanVisible = false;
+    showPracticeCard();
+}
+
+// Creates a practice section with a clickable flashcard.
+function createPracticeMode() {
+    const practiceSection = document.createElement("section");
+    const practiceHeading = document.createElement("h2");
+    practiceCard = document.createElement("button");
+
+    practiceHeading.textContent = "Üben";
+    practiceCard.type = "button";
+    practiceCard.addEventListener("click", togglePracticeAnswer);
+    practiceSection.appendChild(practiceHeading);
+    practiceSection.appendChild(practiceCard);
+    mainContent.appendChild(practiceSection);
+}
+
+// Shows the English word, or the German word after the card is clicked.
+function showPracticeCard() {
+    if (wordPairs.length === 0) {
+        practiceCard.textContent = "Noch keine Wortpaare zum Üben.";
+        practiceCard.disabled = true;
+        return;
+    }
+
+    practiceCard.disabled = false;
+    practiceCard.textContent = isGermanVisible
+        ? wordPairs[0].german
+        : wordPairs[0].english;
+}
+
+// Reveals or hides the German answer on the practice card.
+function togglePracticeAnswer() {
+    isGermanVisible = !isGermanVisible;
+    showPracticeCard();
 }
 
 // Prevents empty submissions and clears the form after a valid submission.
@@ -82,8 +121,12 @@ function addWordPair(event) {
     saveWordPairs();
     wordForm.reset();
     showWordPairs();
+    isGermanVisible = false;
+    showPracticeCard();
 }
 
 wordForm.addEventListener("submit", addWordPair);
 loadWordPairs();
 showWordPairs();
+createPracticeMode();
+showPracticeCard();
