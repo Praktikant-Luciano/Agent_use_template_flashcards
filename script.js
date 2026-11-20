@@ -7,6 +7,8 @@ const storageKey = "wordPairs";
 let wordPairs = [];
 let isGermanVisible = false;
 let practiceCard;
+let nextPracticeButton;
+let practiceCardIndex = 0;
 
 // Loads saved word pairs from localStorage when the page starts.
 function loadWordPairs() {
@@ -62,6 +64,12 @@ function showWordPairs() {
 // Removes the selected word pair and shows the updated list.
 function deleteWordPair(index) {
     wordPairs.splice(index, 1);
+    if (index < practiceCardIndex) {
+        practiceCardIndex--;
+    } else if (practiceCardIndex >= wordPairs.length) {
+        practiceCardIndex = Math.max(0, wordPairs.length - 1);
+    }
+
     saveWordPairs();
     showWordPairs();
     isGermanVisible = false;
@@ -73,12 +81,19 @@ function createPracticeMode() {
     const practiceSection = document.createElement("section");
     const practiceHeading = document.createElement("h2");
     practiceCard = document.createElement("button");
+    nextPracticeButton = document.createElement("button");
 
     practiceHeading.textContent = "Üben";
     practiceCard.type = "button";
     practiceCard.addEventListener("click", togglePracticeAnswer);
+    nextPracticeButton.type = "button";
+    nextPracticeButton.textContent = "Nächste Karte";
+    nextPracticeButton.style.backgroundColor = "#444";
+    nextPracticeButton.style.color = "#fff";
+    nextPracticeButton.addEventListener("click", showNextPracticeCard);
     practiceSection.appendChild(practiceHeading);
     practiceSection.appendChild(practiceCard);
+    practiceSection.appendChild(nextPracticeButton);
     mainContent.appendChild(practiceSection);
 }
 
@@ -87,13 +102,31 @@ function showPracticeCard() {
     if (wordPairs.length === 0) {
         practiceCard.textContent = "Noch keine Wortpaare zum Üben.";
         practiceCard.disabled = true;
+        nextPracticeButton.disabled = true;
         return;
     }
 
     practiceCard.disabled = false;
+    nextPracticeButton.disabled = wordPairs.length < 2;
     practiceCard.textContent = isGermanVisible
-        ? wordPairs[0].german
-        : wordPairs[0].english;
+        ? wordPairs[practiceCardIndex].german
+        : wordPairs[practiceCardIndex].english;
+}
+
+// Selects a random card that is different from the current card.
+function showNextPracticeCard() {
+    if (wordPairs.length < 2) {
+        return;
+    }
+
+    let nextIndex = Math.floor(Math.random() * (wordPairs.length - 1));
+    if (nextIndex >= practiceCardIndex) {
+        nextIndex++;
+    }
+
+    practiceCardIndex = nextIndex;
+    isGermanVisible = false;
+    showPracticeCard();
 }
 
 // Reveals or hides the German answer on the practice card.
