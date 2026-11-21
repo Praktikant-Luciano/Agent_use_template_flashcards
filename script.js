@@ -91,6 +91,35 @@ function ensureTwoEmptyRows(tableBody) {
     }
 }
 
+// Save all submitted entries in the browser.
+function saveEntries(entries) {
+    localStorage.setItem("painDiaryEntries", JSON.stringify(entries));
+}
+
+// Load saved entries and keep only valid entries.
+function loadEntries() {
+    const savedEntries = localStorage.getItem("painDiaryEntries");
+
+    if (savedEntries === null) {
+        return [];
+    }
+
+    try {
+        const entries = JSON.parse(savedEntries);
+        if (Array.isArray(entries) === false) {
+            return [];
+        }
+
+        return entries.filter(function (entry) {
+            const nrsValue = Number(entry.nrs);
+            return entry.date && entry.time && entry.measure && entry.note &&
+                Number.isInteger(nrsValue) && nrsValue >= 0 && nrsValue <= 10;
+        });
+    } catch (error) {
+        return [];
+    }
+}
+
 // Set the date to today or yesterday using the selected shortcut.
 function setDateFromShortcut(dateInput, dayOffset) {
     const date = new Date();
@@ -148,8 +177,16 @@ function setupEntryForm() {
     const nrsSelect = document.querySelector("#nrs");
     const measureInput = document.querySelector("#measure");
     const noteInput = document.querySelector("#note");
+    const entries = loadEntries();
 
     setupKeyboardShortcuts(dateInput, timeInput);
+
+    for (let entryIndex = 0; entryIndex < entries.length; entryIndex++) {
+        const entry = entries[entryIndex];
+        addEntry(tableBody, entry.date, entry.time, entry.nrs,
+            entry.measure, entry.note);
+    }
+    ensureTwoEmptyRows(tableBody);
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -159,8 +196,23 @@ function setupEntryForm() {
             return;
         }
 
-        addEntry(tableBody, dateInput.value, timeInput.value,
-            nrsSelect.value, measureInput.value, noteInput.value);
+        const nrsValue = Number(nrsSelect.value);
+        if (Number.isInteger(nrsValue) === false || nrsValue < 0 || nrsValue > 10) {
+            return;
+        }
+
+        const entry = {
+            date: dateInput.value,
+            time: timeInput.value,
+            nrs: nrsValue,
+            measure: measureInput.value,
+            note: noteInput.value
+        };
+
+        addEntry(tableBody, entry.date, entry.time, String(entry.nrs),
+            entry.measure, entry.note);
+        entries.push(entry);
+        saveEntries(entries);
         form.reset();
         ensureTwoEmptyRows(tableBody);
     });
