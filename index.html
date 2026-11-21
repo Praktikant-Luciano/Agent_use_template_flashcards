@@ -52,7 +52,14 @@
 
             <div class="form-field note-field">
                 <label for="note">Note</label>
-                <input type="text" id="note" name="note" required>
+                <select id="note" name="note" required>
+                    <option value="No exercise" selected>No exercise</option>
+                    <option value="Early mobilization">Early mobilization</option>
+                    <option value="Assisted bed-to-chair transfer">Assisted bed-to-chair transfer</option>
+                    <option value="Assisted standing trial">Assisted standing trial</option>
+                    <option value="Assisted walking > 20 m">Assisted walking &gt; 20 m</option>
+                    <option value="Breathing trial">Breathing trial</option>
+                </select>
             </div>
 
             <button type="submit" id="add-entry">add entry</button>

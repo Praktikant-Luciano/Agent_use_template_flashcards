@@ -12,7 +12,7 @@ F5. the table line and column adapts its width/lenght dynamically to the text
 F6. Mark nrs values > 3 in the table with a ! in a triangle 
 F7. add drop-down menu to measures: none (preset), pain medication as prescribed, physical measure cold, physical measure warm, other non-pharmacological measure
 F8. the warning triangle from F6 has the corresponding color of the bar
-F9. note in head: non-mandatory, add drop-down-menu: no exercise (preset), early mobilization, assisted bed-to-chair transfer, assisted standing trial, assisted walking > 20 m, breathing trial
+F9. add drop-down-menu in field note: no exercise (preset), early mobilization, assisted bed-to-chair transfer, assisted standing trial, assisted walking > 20 m, breathing trial
 ## Acceptance criteria (how I know a feature works)
 - F1: Empty fields cannot be submitted. After adding, the form is cleared.
 - F4: After reload, all submissions are still there
