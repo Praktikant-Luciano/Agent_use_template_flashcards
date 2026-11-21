@@ -34,6 +34,29 @@ function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue, noteV
     addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue, noteValue);
 }
 
+// Sort entries by date and then time, from oldest to newest.
+function sortEntriesChronologically(entries) {
+    entries.sort(function (firstEntry, secondEntry) {
+        const firstDateTime = firstEntry.date + "T" + firstEntry.time;
+        const secondDateTime = secondEntry.date + "T" + secondEntry.time;
+        return firstDateTime.localeCompare(secondDateTime);
+    });
+}
+
+// Rebuild the table from entries in their current chronological order.
+function displayEntries(tableBody, entries) {
+    while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+
+    for (let entryIndex = 0; entryIndex < entries.length; entryIndex++) {
+        const entry = entries[entryIndex];
+        addEntry(tableBody, entry.date, entry.time, String(entry.nrs),
+            entry.measure, entry.note);
+    }
+    ensureTwoEmptyRows(tableBody);
+}
+
 // Show the NRS score as a colored bar whose width matches the score.
 function addPainBar(cell, nrsValue) {
     const track = document.createElement("div");
@@ -216,14 +239,11 @@ function setupEntryForm() {
     const noteInput = document.querySelector("#note");
     const entries = loadEntries();
 
+    sortEntriesChronologically(entries);
+    saveEntries(entries);
     setupKeyboardShortcuts(dateInput, timeInput);
 
-    for (let entryIndex = 0; entryIndex < entries.length; entryIndex++) {
-        const entry = entries[entryIndex];
-        addEntry(tableBody, entry.date, entry.time, entry.nrs,
-            entry.measure, entry.note);
-    }
-    ensureTwoEmptyRows(tableBody);
+    displayEntries(tableBody, entries);
     updateEntrySummary(entries);
 
     form.addEventListener("submit", function (event) {
@@ -247,12 +267,11 @@ function setupEntryForm() {
             note: noteInput.value
         };
 
-        addEntry(tableBody, entry.date, entry.time, String(entry.nrs),
-            entry.measure, entry.note);
         entries.push(entry);
+        sortEntriesChronologically(entries);
         saveEntries(entries);
+        displayEntries(tableBody, entries);
         form.reset();
-        ensureTwoEmptyRows(tableBody);
         updateEntrySummary(entries);
     });
 }

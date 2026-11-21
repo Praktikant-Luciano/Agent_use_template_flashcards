@@ -15,6 +15,7 @@ F8. the warning triangle from F6 has the corresponding color of the bar
 F9. add drop-down-menu in field note: no exercise (preset), early mobilization, assisted bed-to-chair transfer, assisted standing trial, assisted walking > 20 m, breathing trial
 F10. save in browser funktion 
 F11. add summary below table. summarize the current session with number of entries, min- and maximum value, mean value  
+F12. always sort in summary chronological newest ascending
 ## Acceptance criteria (how I know a feature works)
 - F1: Empty fields cannot be submitted. After adding, the form is cleared.
 - F4: After reload, all submissions are still there
