@@ -22,6 +22,7 @@ function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue) {
             cells[0].textContent = dateValue;
             cells[1].textContent = timeValue;
             cells[2].textContent = nrsValue;
+            addPainBar(cells[3], Number(nrsValue));
             cells[4].textContent = measureValue;
             return;
         }
@@ -29,6 +30,28 @@ function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue) {
 
     addEmptyRow(tableBody);
     addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue);
+}
+
+// Show the NRS score as a colored bar whose width matches the score.
+function addPainBar(cell, nrsValue) {
+    const track = document.createElement("div");
+    const fill = document.createElement("div");
+    track.className = "pain-bar-track";
+    fill.className = "pain-bar-fill";
+    fill.style.width = (nrsValue * 10) + "%";
+    fill.setAttribute("role", "img");
+    fill.setAttribute("aria-label", "NRS " + nrsValue + " out of 10");
+
+    if (nrsValue <= 3) {
+        fill.classList.add("pain-bar-green");
+    } else if (nrsValue <= 6) {
+        fill.classList.add("pain-bar-orange");
+    } else {
+        fill.classList.add("pain-bar-red");
+    }
+
+    track.appendChild(fill);
+    cell.appendChild(track);
 }
 
 // Keep exactly two empty table rows available for new entries.
