@@ -38,7 +38,8 @@ h1 {
     gap: 6px;
 }
 
-.measure-field {
+.measure-field,
+.note-field {
     grid-column: 1 / 3;
 }
 

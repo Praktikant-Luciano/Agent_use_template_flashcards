@@ -11,7 +11,7 @@ function addEmptyRow(tableBody) {
 }
 
 // Find an empty row and fill it with the submitted values.
-function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue) {
+function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue, noteValue) {
     const rows = tableBody.querySelectorAll("tr");
 
     for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
@@ -24,12 +24,13 @@ function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue) {
             cells[2].textContent = nrsValue;
             addPainBar(cells[3], Number(nrsValue));
             cells[4].textContent = measureValue;
+            cells[5].textContent = noteValue;
             return;
         }
     }
 
     addEmptyRow(tableBody);
-    addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue);
+    addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue, noteValue);
 }
 
 // Show the NRS score as a colored bar whose width matches the score.
@@ -71,6 +72,54 @@ function ensureTwoEmptyRows(tableBody) {
     }
 }
 
+// Set the date to today or yesterday using the selected shortcut.
+function setDateFromShortcut(dateInput, dayOffset) {
+    const date = new Date();
+    date.setDate(date.getDate() + dayOffset);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    dateInput.value = year + "-" + month + "-" + day;
+}
+
+// Set the time field to the current local time.
+function setTimeFromShortcut(timeInput) {
+    const date = new Date();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    timeInput.value = hours + ":" + minutes;
+}
+
+// Handle date and time shortcuts without interfering with text entry.
+function setupKeyboardShortcuts(dateInput, timeInput) {
+    document.addEventListener("keydown", function (event) {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) {
+            return;
+        }
+
+        const focusedElement = document.activeElement;
+        const isTyping = focusedElement.matches(
+            "textarea, select, input:not([type='date']):not([type='time']), [contenteditable='true']"
+        );
+        if (isTyping) {
+            return;
+        }
+
+        const key = event.key.toLowerCase();
+        if (key === "h") {
+            setDateFromShortcut(dateInput, 0);
+        } else if (key === "g") {
+            setDateFromShortcut(dateInput, -1);
+        } else if (key === "j") {
+            setTimeFromShortcut(timeInput);
+        } else {
+            return;
+        }
+
+        event.preventDefault();
+    });
+}
+
 // Connect the add-entry button to the table.
 function setupEntryForm() {
     const form = document.querySelector("#entry-form");
@@ -79,6 +128,9 @@ function setupEntryForm() {
     const timeInput = document.querySelector("#time");
     const nrsSelect = document.querySelector("#nrs");
     const measureInput = document.querySelector("#measure");
+    const noteInput = document.querySelector("#note");
+
+    setupKeyboardShortcuts(dateInput, timeInput);
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -89,7 +141,7 @@ function setupEntryForm() {
         }
 
         addEntry(tableBody, dateInput.value, timeInput.value,
-            nrsSelect.value, measureInput.value);
+            nrsSelect.value, measureInput.value, noteInput.value);
         form.reset();
         ensureTwoEmptyRows(tableBody);
     });

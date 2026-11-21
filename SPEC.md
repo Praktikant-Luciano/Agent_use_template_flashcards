@@ -6,7 +6,8 @@ Just me, on a laptop browser.
 ## Features (numbered, so prompts can refer to them)
 F1. create the head of the form with: date and time, a dropdown menu for the value of the NRS 0-10, a field for the taken measure, a table below with 2 lines and 6 columns, a button "add entry" to transfer the values of the head to the table
 F2. in the column bar it shows depending on the value of the nrs: 0-3 green, 4-6 orange, 7-10 red a bar, which has the width of NRS x 10% (bar  is a visual representation of the nrs value)
-F4. 
+F3. add note field to the head which transfers to the note column in the table
+F4. add funtionality for date: pressing h sets date to current date, pressing g sets date to yesterday; add functionalty for time: pressing j sets time to now
 ## Acceptance criteria (how I know a feature works)
 - F1: Empty fields cannot be submitted. After adding, the form is cleared.
 - F4: After reload, all submissions are still there
