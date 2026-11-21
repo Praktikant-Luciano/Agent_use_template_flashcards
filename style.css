@@ -177,6 +177,14 @@ td {
     content: "";
 }
 
+.nrs-warning-orange::before {
+    border-bottom-color: #d97706;
+}
+
+.nrs-warning-red::before {
+    border-bottom-color: #c62828;
+}
+
 .nrs-warning::after {
     position: absolute;
     top: 5px;

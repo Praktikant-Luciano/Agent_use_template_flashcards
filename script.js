@@ -64,6 +64,11 @@ function addNrsWarning(cell, nrsValue) {
 
     const warning = document.createElement("span");
     warning.className = "nrs-warning";
+    if (nrsValue <= 6) {
+        warning.classList.add("nrs-warning-orange");
+    } else {
+        warning.classList.add("nrs-warning-red");
+    }
     warning.setAttribute("role", "img");
     warning.setAttribute("aria-label", "Warning: NRS above 3");
     cell.appendChild(warning);
