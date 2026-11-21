@@ -87,6 +87,24 @@ button:hover {
     overflow-x: auto;
 }
 
+.entry-summary {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #d9e2e7;
+    border-radius: 4px;
+    background: #f8fafb;
+}
+
+.entry-summary h2 {
+    margin: 0 0 12px;
+    color: #36515c;
+    font-size: 18px;
+}
+
+.entry-summary p {
+    margin: 6px 0;
+}
+
 table {
     width: max-content;
     min-width: 100%;

@@ -11,6 +11,7 @@
 - F9: Changed the note field to a dropdown with the specified exercise options and “No exercise” preset.
 - F8: Matched warning triangle colors to the NRS bar: orange for values 4-6 and red for values 7-10.
 - F10: Added browser storage using `localStorage`, restored saved entries after reload, and validated saved and submitted NRS values.
+- F11: Added a summary below the table with entry count, minimum NRS, maximum NRS, and mean NRS. The summary updates after entries are loaded or added.
 
 ## Next
 

@@ -120,6 +120,43 @@ function loadEntries() {
     }
 }
 
+// Summarize the number and NRS values of the current entries.
+function updateEntrySummary(entries) {
+    const countElement = document.querySelector("#entry-count");
+    const minimumElement = document.querySelector("#nrs-minimum");
+    const maximumElement = document.querySelector("#nrs-maximum");
+    const meanElement = document.querySelector("#nrs-mean");
+
+    if (entries.length === 0) {
+        countElement.textContent = "0";
+        minimumElement.textContent = "-";
+        maximumElement.textContent = "-";
+        meanElement.textContent = "-";
+        return;
+    }
+
+    let minimum = Number(entries[0].nrs);
+    let maximum = Number(entries[0].nrs);
+    let total = 0;
+
+    for (let entryIndex = 0; entryIndex < entries.length; entryIndex++) {
+        const nrsValue = Number(entries[entryIndex].nrs);
+        if (nrsValue < minimum) {
+            minimum = nrsValue;
+        }
+        if (nrsValue > maximum) {
+            maximum = nrsValue;
+        }
+        total = total + nrsValue;
+    }
+
+    const mean = total / entries.length;
+    countElement.textContent = String(entries.length);
+    minimumElement.textContent = String(minimum);
+    maximumElement.textContent = String(maximum);
+    meanElement.textContent = mean.toFixed(2);
+}
+
 // Set the date to today or yesterday using the selected shortcut.
 function setDateFromShortcut(dateInput, dayOffset) {
     const date = new Date();
@@ -187,6 +224,7 @@ function setupEntryForm() {
             entry.measure, entry.note);
     }
     ensureTwoEmptyRows(tableBody);
+    updateEntrySummary(entries);
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -215,6 +253,7 @@ function setupEntryForm() {
         saveEntries(entries);
         form.reset();
         ensureTwoEmptyRows(tableBody);
+        updateEntrySummary(entries);
     });
 }
 
