@@ -159,3 +159,31 @@ td {
 .pain-bar-red {
     background: #c62828;
 }
+
+.nrs-warning {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.nrs-warning::before {
+    position: absolute;
+    border-right: 9px solid transparent;
+    border-bottom: 16px solid #d97706;
+    border-left: 9px solid transparent;
+    content: "";
+}
+
+.nrs-warning::after {
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 10px;
+    content: "!";
+}

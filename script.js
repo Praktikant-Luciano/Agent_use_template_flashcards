@@ -22,6 +22,7 @@ function addEntry(tableBody, dateValue, timeValue, nrsValue, measureValue, noteV
             cells[0].textContent = dateValue;
             cells[1].textContent = timeValue;
             cells[2].textContent = nrsValue;
+            addNrsWarning(cells[2], Number(nrsValue));
             addPainBar(cells[3], Number(nrsValue));
             cells[4].textContent = measureValue;
             cells[5].textContent = noteValue;
@@ -53,6 +54,19 @@ function addPainBar(cell, nrsValue) {
 
     track.appendChild(fill);
     cell.appendChild(track);
+}
+
+// Add a warning triangle when the NRS score is higher than 3.
+function addNrsWarning(cell, nrsValue) {
+    if (nrsValue <= 3) {
+        return;
+    }
+
+    const warning = document.createElement("span");
+    warning.className = "nrs-warning";
+    warning.setAttribute("role", "img");
+    warning.setAttribute("aria-label", "Warning: NRS above 3");
+    cell.appendChild(warning);
 }
 
 // Keep exactly two empty table rows available for new entries.
