@@ -10,6 +10,8 @@ F3. add note field to the head which transfers to the note column in the table
 F4. add funtionality for date: pressing h sets date to current date, pressing g sets date to yesterday; add functionalty for time: pressing j sets time to now
 F5. the table line and column adapts its width/lenght dynamically to the text
 F6. Mark nrs values > 3 in the table with a ! in a triangle 
+F7. add drop-down menu to measures: none (preset), pain medication as prescribed, physical measure cold, physical measure warm, other non-pharmacological measure
+F8. the warning triangle from F6 has the corresponding color of the bar
 ## Acceptance criteria (how I know a feature works)
 - F1: Empty fields cannot be submitted. After adding, the form is cleared.
 - F4: After reload, all submissions are still there

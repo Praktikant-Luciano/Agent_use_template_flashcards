@@ -2,13 +2,17 @@
 
 ## Done
 
-F1: Implemented the date, time, NRS 0-10 dropdown, and measure fields in the form.
-Added the "add entry" button and six-column table with two initial empty rows.
-Valid submissions are transferred to the table, the form is cleared, and two empty rows remain available.
-Added a clean healthcare-inspired style and connected the HTML page to the CSS and JavaScript files.
+- F1: Added the date, time, NRS 0-10, measure, and note fields; valid entries transfer to the six-column table, the form clears, and two empty rows remain available.
+- F2: Added an NRS bar with value-based width and green (0-3), orange (4-6), and red (7-10) colors.
+- F3: Added the note field and transfer to the table's note column.
+- F4: Added keyboard shortcuts: `h` for today, `g` for yesterday, and `j` for the current time.
+- F5: Made date, time, NRS, and bar columns fixed-width; the bar fits the maximum NRS value. The measure and note columns expand without wrapping, and the table can scroll horizontally. Widened the page to 900px.
+- F6: Added a warning triangle with `!` beside NRS values above 3.
 
 ## Next
 
 ## Decisions & notes
 
 ## Known problems
+
+- Entries are not saved across reloads, although the acceptance criteria mention persistence.
