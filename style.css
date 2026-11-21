@@ -11,7 +11,7 @@ body {
 }
 
 .page {
-    max-width: 600px;
+    max-width: 900px;
     margin: 40px auto;
     padding: 32px;
     background: #ffffff;
@@ -88,19 +88,39 @@ button:hover {
 }
 
 table {
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
+}
+
+#entry-table th:nth-child(1),
+#entry-table td:nth-child(1) {
+    width: 120px;
+}
+
+#entry-table th:nth-child(2),
+#entry-table td:nth-child(2) {
+    width: 100px;
+}
+
+#entry-table th:nth-child(3),
+#entry-table td:nth-child(3) {
+    width: 70px;
+}
+
+#entry-table th:nth-child(4),
+#entry-table td:nth-child(4) {
+    width: 156px;
 }
 
 th,
 td {
-    height: 44px;
-    padding: 8px;
+    padding: 12px 8px;
     border: 1px solid #d9e2e7;
     text-align: left;
     vertical-align: middle;
-    overflow-wrap: break-word;
+    white-space: nowrap;
 }
 
 th {
@@ -115,7 +135,7 @@ td {
 }
 
 .pain-bar-track {
-    width: 100%;
+    width: 130px;
     height: 12px;
     overflow: hidden;
     border-radius: 6px;

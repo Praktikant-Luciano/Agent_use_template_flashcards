@@ -8,6 +8,8 @@ F1. create the head of the form with: date and time, a dropdown menu for the val
 F2. in the column bar it shows depending on the value of the nrs: 0-3 green, 4-6 orange, 7-10 red a bar, which has the width of NRS x 10% (bar  is a visual representation of the nrs value)
 F3. add note field to the head which transfers to the note column in the table
 F4. add funtionality for date: pressing h sets date to current date, pressing g sets date to yesterday; add functionalty for time: pressing j sets time to now
+F5. the table line and column adapts its width/lenght dynamically to the text
+F6. Mark nrs values > 3 in the table with a ! in a triangle 
 ## Acceptance criteria (how I know a feature works)
 - F1: Empty fields cannot be submitted. After adding, the form is cleared.
 - F4: After reload, all submissions are still there
